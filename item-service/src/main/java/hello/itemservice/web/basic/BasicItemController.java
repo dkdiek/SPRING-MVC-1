@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * hello.itemservice.web.basic BasicItemController
@@ -45,9 +46,12 @@ public class BasicItemController {
   }
 
   @PostMapping("/add")
-  public String save(@ModelAttribute("item") Item item, Model model) {
-    itemRepository.save(item);
-    return "basic/item";
+  public String save(Item item, RedirectAttributes redirectAttributes) {
+    Item savedItem = itemRepository.save(item);
+
+    redirectAttributes.addAttribute("itemId", savedItem.getId());
+    redirectAttributes.addAttribute("status", true);
+    return "redirect:/basic/items/{itemId}";
   }
 
   @GetMapping("/{itemId}/edit")
