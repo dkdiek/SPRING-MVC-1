@@ -5,7 +5,6 @@ import hello.itemservice.domain.item.ItemRepository;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.Banner.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +31,7 @@ public class BasicItemController {
   }
 
   @GetMapping("/{itemId}")
-  public String item(@PathVariable long itemId, Model model){
+  public String item(@PathVariable Long itemId, Model model){
     Item item = itemRepository.findById(itemId);
     model.addAttribute("item", item);
     return "basic/item";
